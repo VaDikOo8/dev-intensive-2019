@@ -20,7 +20,20 @@ object Utils {
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        return firstName?.substring(0..0) + lastName?.substring(0..0)
+        var initials = when(firstName) {
+            "" -> if (lastName != null) {""} else {null}
+            " " -> if (lastName != null) {""} else {null}
+            null -> ""
+            else -> firstName?.substring(0..0)
+        }
+
+        initials += when(lastName) {
+            "" -> if (initials == null || firstName != null) {""} else {null}
+            " " -> if (initials == null || firstName != null) {""} else {null}
+            null -> ""
+            else -> lastName?.substring(0..0)
+        }
+        if (initials == "") {initials=null}
+        return initials
     }
 }
