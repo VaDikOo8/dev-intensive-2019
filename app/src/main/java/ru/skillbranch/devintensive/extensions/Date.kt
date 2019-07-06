@@ -36,43 +36,11 @@ fun Date.humanizeDiff(): String {
             in 0L until SECOND -> "только что"
             in SECOND until 45 * SECOND -> "несколько секунд назад"
             in 45 * SECOND until 75 * SECOND -> "минуту назад"
-            in 75 * SECOND until 45 * MINUTE ->
-                "${diffDate.div(MINUTE)} ${when (diffDate.div(MINUTE).toInt()) {
-                    1, 21, 31, 41 -> "минуту"
-                    in 2..4, in 22..24, in 32..34 -> "минуты"
-                    else -> "минут"
-                }} назад"
+            in 75 * SECOND until 45 * MINUTE -> TimeUnits.MINUTE.plural(diffDate.div(MINUTE).toInt()) + " назад"
             in 45 * MINUTE until 75 * MINUTE -> "час назад"
-            in 75 * MINUTE until 22 * HOUR ->
-                "${diffDate.div(HOUR)} " +
-                        "${when (diffDate.div(HOUR).toInt()) {
-                            1, 21 -> "час"
-                            in 2..4 -> "часа"
-                            else -> "часов"
-                        }} назад"
+            in 75 * MINUTE until 22 * HOUR -> TimeUnits.HOUR.plural(diffDate.div(HOUR).toInt()) + " назад"
             in 22 * HOUR until 26 * HOUR -> "день назад"
-            in 26 * HOUR until 360 * DAY ->
-                "${diffDate.div(DAY)} " +
-                        "${when (diffDate.div(DAY).toString().substring(diffDate.div(DAY).toString().length - 1)) {
-                            "1" -> if (diffDate.div(DAY).toString().length > 1 &&
-                                diffDate.div(DAY).toString().substring(diffDate.div(DAY).toString().length - 2) == "11"
-                            ) {
-                                "дней"
-                            } else {
-                                "день"
-                            }
-                            "2", "3", "4" -> if (diffDate.div(DAY).toString().length > 1 &&
-                                diffDate.div(DAY).toString().substring(
-                                    diffDate.div(DAY).toString().length - 2,
-                                    diffDate.div(DAY).toString().length - 1
-                                ) == "1"
-                            ) {
-                                "дней"
-                            } else {
-                                "дня"
-                            }
-                            else -> "дней"
-                        }} назад"
+            in 26 * HOUR until 360 * DAY -> TimeUnits.DAY.plural(diffDate.div(DAY).toInt()) + " назад"
             else -> "более года назад"
         }
     } else {
@@ -82,41 +50,11 @@ fun Date.humanizeDiff(): String {
             in 0L until SECOND -> "только что"
             in SECOND until 45 * SECOND -> "через несколько секунд"
             in 45 * SECOND until 75 * SECOND -> "через минуту"
-            in 75 * SECOND until 45 * MINUTE -> "через ${diffDate.div(MINUTE)} " +
-                    when (diffDate.div(MINUTE).toInt()) {
-                        1, 21, 31, 41 -> "минуту"
-                        in 2..4, in 22..24, in 32..34 -> "минуты"
-                        else -> "минут"
-                    }
+            in 75 * SECOND until 45 * MINUTE -> "через ${TimeUnits.MINUTE.plural(diffDate.div(MINUTE).toInt())}"
             in 45 * MINUTE until 75 * MINUTE -> "через час"
-            in 75 * MINUTE until 22 * HOUR -> "через ${diffDate.div(HOUR)} " +
-                    when (diffDate.div(HOUR).toInt()) {
-                        1, 21 -> "час"
-                        in 2..4 -> "часа"
-                        else -> "часов"
-                    }
+            in 75 * MINUTE until 22 * HOUR -> "через ${TimeUnits.HOUR.plural(diffDate.div(HOUR).toInt())}"
             in 22 * HOUR until 26 * HOUR -> "через день"
-            in 26 * HOUR until 360 * DAY -> "через ${diffDate.div(DAY)} " +
-                    when (diffDate.div(DAY).toString().substring(diffDate.div(DAY).toString().length - 1)) {
-                        "1" -> if (diffDate.div(DAY).toString().length > 1 &&
-                            diffDate.div(DAY).toString().substring(diffDate.div(DAY).toString().length - 2) == "11"
-                        ) {
-                            "дней"
-                        } else {
-                            "день"
-                        }
-                        "2", "3", "4" -> if (diffDate.div(DAY).toString().length > 1 &&
-                            diffDate.div(DAY).toString().substring(
-                                diffDate.div(DAY).toString().length - 2,
-                                diffDate.div(DAY).toString().length - 1
-                            ) == "1"
-                        ) {
-                            "дней"
-                        } else {
-                            "дня"
-                        }
-                        else -> "дней"
-                    }
+            in 26 * HOUR until 360 * DAY -> "через ${TimeUnits.DAY.plural(diffDate.div(DAY).toInt())}"
             else -> "более чем через год"
         }
     }
@@ -126,5 +64,52 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int): String {
+        var unit = this@TimeUnits
+        return when (unit) {
+            SECOND -> "$value ${when (value) {
+                1, 21, 31, 41 -> "секунду"
+                in 2..4, in 22..24, in 32..34 -> "секунды"
+                else -> "секунд"
+            }
+            }"
+            MINUTE -> "$value ${when (value) {
+                1, 21, 31, 41 -> "минуту"
+                in 2..4, in 22..24, in 32..34 -> "минуты"
+                else -> "минут"
+            }
+            }"
+            HOUR -> "$value ${when (value) {
+                1, 21 -> "час"
+                in 2..4 -> "часа"
+                else -> "часов"
+            }
+            }"
+            DAY -> {
+                "$value ${when (value.toString().substring(value.toString().length - 1)) {
+                    "1" -> if (value.toString().length > 1 &&
+                        value.toString().substring(value.toString().length - 2) == "11"
+                    ) {
+                        "дней"
+                    } else {
+                        "день"
+                    }
+                    "2", "3", "4" -> if (value.toString().length > 1 &&
+                        value.toString().substring(
+                            value.toString().length - 2,
+                            value.toString().length - 1
+                        ) == "1"
+                    ) {
+                        "дней"
+                    } else {
+                        "дня"
+                    }
+                    else -> "дней"
+                }
+                }"
+            }
+        }
+    }
 }
