@@ -69,21 +69,66 @@ enum class TimeUnits {
     fun plural(value: Int): String {
         var unit = this@TimeUnits
         return when (unit) {
-            SECOND -> "$value ${when (value) {
-                1, 21, 31, 41 -> "секунду"
-                in 2..4, in 22..24, in 32..34 -> "секунды"
+            SECOND -> "$value ${when (value.toString().substring(value.toString().length - 1)) {
+                "1" -> if (value.toString().length > 1 &&
+                value.toString().substring(value.toString().length - 2) == "11"
+                ) {
+                    "секунд"
+                } else {
+                    "секунду"
+                }
+                "2","3","4" -> if (value.toString().length > 1 &&
+                    value.toString().substring(
+                        value.toString().length - 2,
+                        value.toString().length - 1
+                    ) == "1"
+                ) {
+                    "секунд"
+                } else {
+                    "секунды"
+                }
                 else -> "секунд"
             }
             }"
-            MINUTE -> "$value ${when (value) {
-                1, 21, 31, 41 -> "минуту"
-                in 2..4, in 22..24, in 32..34 -> "минуты"
+            MINUTE -> "$value ${when (value.toString().substring(value.toString().length - 1)) {
+                "1" -> if (value.toString().length > 1 &&
+                    value.toString().substring(value.toString().length - 2) == "11"
+                ) {
+                    "минут"
+                } else {
+                    "минуту"
+                }
+                "2","3","4" -> if (value.toString().length > 1 &&
+                    value.toString().substring(
+                        value.toString().length - 2,
+                        value.toString().length - 1
+                    ) == "1"
+                ) {
+                    "минут"
+                } else {
+                    "минуты"
+                }
                 else -> "минут"
             }
             }"
-            HOUR -> "$value ${when (value) {
-                1, 21 -> "час"
-                in 2..4 -> "часа"
+            HOUR -> "$value ${when (value.toString().substring(value.toString().length - 1)) {
+                "1" -> if (value.toString().length > 1 &&
+                    value.toString().substring(value.toString().length - 2) == "11"
+                ) {
+                    "часов"
+                } else {
+                    "час"
+                }
+                "2","3","4" -> if (value.toString().length > 1 &&
+                    value.toString().substring(
+                        value.toString().length - 2,
+                        value.toString().length - 1
+                    ) == "1"
+                ) {
+                    "часов"
+                } else {
+                    "часа"
+                }
                 else -> "часов"
             }
             }"
