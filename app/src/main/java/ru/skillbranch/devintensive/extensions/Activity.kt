@@ -24,10 +24,7 @@ fun Activity.isKeyboardOpen(): Boolean {
 
     val heightDiff = rootView.bottom - r.bottom
 
-    val isKeyboardShown = heightDiff > 100 * dm.density
-    Log.d("M_Activity", "isKeyboardOpen ? $isKeyboardShown")
-
-    return isKeyboardShown
+    return heightDiff > 100 * dm.density
 }
 
 fun Activity.isKeyboardClosed(): Boolean {
@@ -38,9 +35,6 @@ fun Activity.isKeyboardClosed(): Boolean {
 
     val heightDiff = rootView.bottom - r.bottom
 
-    val isKeyboardShown = heightDiff < 100 * dm.density
-    Log.d("M_Activity", "isKeyboardClosed ? $isKeyboardShown")
-
-    return isKeyboardShown
+    return heightDiff < 100 * dm.density
 }
 
