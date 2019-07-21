@@ -12,8 +12,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-        val namePattern = "^[А-ЯA-Z][а-яa-z]+(\\s[А-ЯA-Zа-яa-z]*)?(\\s[А-ЯA-Zа-яa-z]*)?".toRegex()
-        val professionPattern = "^([а-я]+|[a-z]+)\$".toRegex()
+        val namePattern = "^[А-ЯA-Z][а-яa-z]*(\\s[А-ЯA-Zа-яa-z]*)?(\\s[А-ЯA-Zа-яa-z]*)?".toRegex()
+        val professionPattern = "[а-яa-z ]*".toRegex()
         val materialPattern = "^(\\D+)\$".toRegex()
         val birthdayPattern = "^(\\d+)\$".toRegex()
         val serialPattern = "^(\\d{7})\$".toRegex()
