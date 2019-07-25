@@ -27,14 +27,5 @@ fun Activity.isKeyboardOpen(): Boolean {
     return heightDiff > 100 * dm.density
 }
 
-fun Activity.isKeyboardClosed(): Boolean {
-    val r = Rect()
-    val rootView = this.findViewById<View>(R.id.root_layout)
-    rootView.getWindowVisibleDisplayFrame(r)
-    val dm = rootView.resources.displayMetrics
-
-    val heightDiff = rootView.bottom - r.bottom
-
-    return heightDiff < 100 * dm.density
-}
+fun Activity.isKeyboardClosed(): Boolean = !isKeyboardOpen()
 

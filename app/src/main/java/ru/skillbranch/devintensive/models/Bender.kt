@@ -16,20 +16,20 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     private fun checkAnswer(answer: String): String {
         val (isValidate, message) = question.validate(answer)
-        return if (isValidate) {
-            if (question.answers.contains(answer.toLowerCase())) {
-                question = question.nextQuestion()
-                "Отлично - ты справился\n"
-            } else {
-                status = status.nextStatus()
-                if (status != Status.NORMAL)
-                    "Это неправильный ответ\n"
-                else {
-                    question = Question.NAME
-                    "Это неправильный ответ. Давай все по новой\n"
-                }
+        return if (!isValidate) {
+            message
+        } else if (question.answers.contains(answer.toLowerCase())) {
+            question = question.nextQuestion()
+            "Отлично - ты справился\n"
+        } else {
+            status = status.nextStatus()
+            if (status != Status.NORMAL)
+                "Это неправильный ответ\n"
+            else {
+                question = Question.NAME
+                "Это неправильный ответ. Давай все по новой\n"
             }
-        } else message
+        }
     }
 
     enum class Status(val color: Triple<Int, Int, Int>) {
