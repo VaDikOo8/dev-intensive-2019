@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.res.Resources
+
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val parts: List<String>? = when(fullName) {
@@ -15,7 +17,7 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        var sb = StringBuilder(payload.length)
+        var sb = StringBuilder(payload.trim().length)
         for (i: Int in 1..payload.length) {
             val l = payload.substring(i - 1, i)
             sb.append(when (l) {
@@ -87,13 +89,12 @@ object Utils {
                 else -> l
             })
         }
-
         var payload = sb.toString()
-        return payload.replace(" ", divider)
+        return payload.trim().replace(" ", divider)
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        var initials = when (firstName) {
+        var initials = when (firstName?.trim()) {
             "" -> if (lastName != null) {
                 ""
             } else {
@@ -105,10 +106,10 @@ object Utils {
                 null
             }
             null -> ""
-            else -> firstName?.toUpperCase().substring(0..0)
+            else -> firstName.toUpperCase().substring(0..0)
         }
 
-        initials += when (lastName) {
+        initials += when (lastName?.trim()) {
             "" -> if (initials == null || firstName != null) {
                 ""
             } else {
@@ -126,5 +127,25 @@ object Utils {
             initials = null
         }
         return initials
+    }
+
+    fun dpToPx(borderWidthByDp: Int): Int {
+        val scale = Resources.getSystem().displayMetrics.density
+        return (borderWidthByDp * scale + 0.5f).toInt()
+    }
+
+    fun pxToDp(borderWidthByPx: Int): Int {
+        val scale = Resources.getSystem().displayMetrics.density
+        return (borderWidthByPx / scale + 0.5f).toInt()
+    }
+
+    fun spToPx(borderWidthBySp: Int) = borderWidthBySp * Resources.getSystem().displayMetrics.scaledDensity.toInt()
+
+    fun isRepositoryValid(repository: String): Boolean {
+        val ignored = setOf("enterprise", "features", "topics",
+            "collections", "trending", "events", "marketplace", "pricing", "nonprofit",
+            "customer-stories", "security", "login", "join")
+        val regex = Regex("^(https://)?(www\\.)?(github\\.com/)(?!(${ignored.joinToString("|")})(?=/|\$))[a-zA-Z\\d](?:[a-zA-Z\\d]|-(?=[a-zA-Z\\d])){0,38}(/)?\$")
+        return repository.isEmpty() || regex.matches(repository)
     }
 }
