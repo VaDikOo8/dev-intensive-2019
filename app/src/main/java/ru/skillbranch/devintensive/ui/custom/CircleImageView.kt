@@ -16,7 +16,7 @@ import ru.skillbranch.devintensive.utils.Utils.dpToPx
 import ru.skillbranch.devintensive.utils.Utils.pxToDp
 
 
-class CircleImageView @JvmOverloads constructor(
+open class CircleImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
