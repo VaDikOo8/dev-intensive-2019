@@ -84,7 +84,6 @@ class ChatAdapter(val listener : (ChatItem) -> Unit) : RecyclerView.Adapter<Chat
     inner class SingleChatViewHolder(convertView: View) : ChatItemViewHolder(convertView), ItemTouchViewHolder {
 
         override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
-
             if (item.avatar == null) {
                 Glide.with(itemView)
                     .clear(iv_avatar_single)
