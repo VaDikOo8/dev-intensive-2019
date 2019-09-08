@@ -121,7 +121,7 @@ object Utils {
                 null
             }
             null -> ""
-            else -> lastName?.toUpperCase().substring(0..0)
+            else -> lastName.toUpperCase().substring(0..0)
         }
         if (initials == "") {
             initials = null

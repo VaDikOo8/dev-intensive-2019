@@ -10,12 +10,32 @@
     </declare-styleable>
 
     <declare-styleable name="AvatarImageView">
-        <attr name="cv_borderColor" format="color"/>
-        <attr name="cv_borderWidth" format="dimension"/>
+        <attr name="aiv_borderColor" format="color"/>
+        <attr name="aiv_borderWidth" format="dimension"/>
     </declare-styleable>
 
     <attr name="colorAccentedSurface" format="reference"/>
     <attr name="colorDivider" format="reference"/>
     <attr name="colorIcon" format="reference"/>
 
+    <attr name="colorTextLabel" format="reference"/>
+    <attr name="colorTextMessage" format="reference"/>
+    <attr name="colorSwipeBackground" format="reference"/>
+    <attr name="colorListItem" format="reference"/>
+
+    <attr name="colorItemSelected" format="reference"/>
+    <attr name="colorItemCleared" format="reference"/>
+
+    <attr name="colorUserSelected" format="reference"/>
+    <attr name="colorIndicator" format="reference"/>
+
+    <attr name="colorTime" format="reference"/>
+    <attr name="colorCounterBackground" format="reference"/>
+
+    <attr name="colorArchiveBackground" format="reference"/>
+    <attr name="colorChipBackground" format="reference"/>
+    <attr name="colorChip" format="reference"/>
+
+    <attr name="colorSnackBarBackground" format="reference"/>
+    <attr name="colorSnackBarText" format="reference"/>
 </resources>

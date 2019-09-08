@@ -14,4 +14,8 @@
     <color name="color_divider_light">#1FFFFFFF</color>
     <color name="color_indicator">#581F99</color>
     <color name="color_green">#4FD149</color>
+
+    <color name="color_list_item_night">#1D1D1D</color>
+    <color name="color_appbar_night">#272727</color>
+    <color name="color_chip_group_night">#4C4C4C</color>
 </resources>
